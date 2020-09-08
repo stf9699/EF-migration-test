@@ -4,14 +4,16 @@ using DemoMVCWebsite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DemoMVCWebsite.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20200908033824_SecondMigration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,38 +43,6 @@ namespace DemoMVCWebsite.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Height")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<byte[]>("Photo")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("StudentName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TeacherID")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Weight")
-                        .HasColumnType("real");
-
-                    b.HasKey("StudentID");
-
-                    b.HasIndex("TeacherID");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("DemoMVCWebsite.Models.Teacher", b =>
-                {
-                    b.Property<int>("TeacherID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
@@ -85,30 +55,23 @@ namespace DemoMVCWebsite.Migrations
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("TeacherName")
+                    b.Property<string>("StudentName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
-                    b.HasKey("TeacherID");
+                    b.HasKey("StudentID");
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Teacher");
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("DemoMVCWebsite.Models.Student", b =>
                 {
-                    b.HasOne("DemoMVCWebsite.Models.Teacher", "Teacher")
-                        .WithMany("Students")
-                        .HasForeignKey("TeacherID");
-                });
-
-            modelBuilder.Entity("DemoMVCWebsite.Models.Teacher", b =>
-                {
                     b.HasOne("DemoMVCWebsite.Models.Course", "Course")
-                        .WithMany("Teachers")
+                        .WithMany("Students")
                         .HasForeignKey("CourseId");
                 });
 #pragma warning restore 612, 618
